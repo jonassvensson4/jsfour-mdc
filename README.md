@@ -6,7 +6,7 @@ Mobile Data Computer, en polisdator som finns i alla polisbilar där du kan gör
 (OBS! Kolla på bilderna längst ner för att lättare förstå)
 
 * Söka efter personer via personnummer
-  - Här kan du se om en person är efterlyst och brottsregistret, även lite grundläggande information. Den hämtar inforamtion från mitt brottsregister-script
+  - Här kan du se om en person är efterlyst och dess brottsregistret, även lite grundläggande information. Den hämtar brotts-inforamtion från mitt brottsregister-script
 * Söka upp bilar via reggnummer
   - Här ser du vem som äger bilen, om bilen har fått några anmärkningar vid tidigare kontroll samt om den är besiktigad
 * Skriva incidenter
