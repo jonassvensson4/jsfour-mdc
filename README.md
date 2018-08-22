@@ -25,7 +25,7 @@ Du får mer än gärna ändra vad du vill i scriptet men du får INTE sälja vid
 För att scriptet ska fungera så behöver du använda dig av ESX.
 
 * Kör SQL-filen, får du error så får du importera de manuellt. Vissa (dåliga) SQL-program klarar inte av primary keys
-* Lägg till lastdigits i tabellerna users och charachters, <a href="https://github.com/jonassvensson4/jsfour-register">jsfour-register<a/> har en SQL-fil du kan köra
+* Lägg till lastdigits i tabellerna users och characters, <a href="https://github.com/jonassvensson4/jsfour-register">jsfour-register<a/> har en SQL-fil du kan köra
   - Du måste ha ett script, alternativt lägga in lastdigits själv på alla användare då scriptet kräver detta. Du kan även använda mitt jsfour-register
 * Använder du inte mitt jsfour-brottsregister så kommer du förmodligen få en error, rekommenderar dig att använda det. Alternativt ändra om i server.lua
 * Har du lagt till egna polisbilar så måste du lägga till modellnamnet i config.lua
