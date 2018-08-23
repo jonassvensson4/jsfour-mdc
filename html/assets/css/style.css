@@ -1,0 +1,378 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  color: #ffffff;
+}
+p, h1, h2, h3, h4, h5, form, ul, li {
+  margin: 0;
+  padding: 0;
+}
+button {
+  background: #f5e068 !important;
+  color: #2a4580 !important;
+}
+#computer {
+  display: none;
+  left: 100px;
+  bottom: 250px;
+  position: absolute;
+  height: 468px;
+  width: 777px;
+  background: url('../images/frame.png');
+}
+#screen {
+  background: url('../images/background.png');
+  height: 334px;
+  width: 594px;
+  margin: 63px 10px 10px 90px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+#error {
+  display: none;
+  position: absolute;
+  background: #7a2323;
+  width: 594px;
+  z-index: 100;
+  text-align: center;
+  padding: 20px;
+  bottom: 70px;
+}
+#error .material-icons {
+  float: left;
+  vertical-align: middle;
+}
+#login {
+  display: block;
+  height: 340px;
+  width: 594px;
+  text-align: center;
+  padding-top: 150px;
+  background: rgba(0, 0, 0, 0.7);
+}
+#login input {
+  text-align: center;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 25px !important;
+  width: 120px !important;
+  box-sizing: border-box;
+  display: inline-block !important;
+  background: none !important;
+  border-bottom: 1px solid white !important;
+  font-weight: bold;
+  color: #ffffff;
+}
+#login input:focus {
+  box-shadow: none !important;
+  background: none !important;
+}
+#admin, .admin {
+  display: none;
+}
+#admin thead td {
+  color: #f5e068;
+}
+#admin tbody td {
+  color: #ffffff;
+}
+#start {
+  display: none;
+}
+#header {
+  display: none;
+  background: rgba(0, 0, 0, 0.2);
+  height: 40px;
+}
+#header img {
+  padding-left:10px;
+}
+#header p {
+  margin: 8px 10px 0 0;
+  float: right;
+}
+.block {
+  display: inline-block;
+  float: left;
+  margin-right: 2px;
+}
+.block .header {
+  padding: 8px;
+  background: #2a4580;
+  width: 190px;
+  height: 53px;
+}
+.block h1 {
+  font-size: 10px;
+  float: left;
+  position: relative;
+  color: #f5e068;
+}
+.block .material-icons {
+  float: right;
+  margin-top: 0px;
+  color: #f5e068;
+}
+.block-buttons {
+  float: right;
+  margin: -5px 0 -1px 0;
+  width: 210px;
+}
+.block-buttons a {
+  list-style: none;
+  width: 210px;
+  height: 58px;
+  padding-top: 12px;
+  background: #2a4580;
+  text-align: center;
+  float: right;
+  color: #f5e068;
+  font-size: 20px;
+  border-radius: 0px !important;
+  border-bottom: 1px solid #f5e068;
+}
+.block-buttons a:nth-last-child(1) {
+  border: none;
+}
+.block-buttons a:focus{
+  background-color: #1d3260
+}
+.block form {
+  float: left;
+}
+.block .column {
+  display: list-item;
+  padding: 8px;
+  background: #2a4580;
+  width: 190px;
+  height: 40px;
+  list-style: none;
+  margin: 5px 0 5px 0;
+}
+.block .column h1 {
+  margin-left: 10px;
+  font-size: 25px;
+}
+input {
+  margin: 0 !important;
+  padding: 0 0 0 5px !important;
+  height: 25px !important;
+  width: 120px !important;
+  box-sizing: border-box;
+  display: inline-block !important;
+  background: #2a4580 !important;
+  border: none !important;
+  font-weight: bold;
+  color: #ffffff;
+}
+input:focus {
+  box-shadow: none !important;
+  background: #4365ad !important;
+}
+.info {
+  overflow: hidden;
+  padding: 10px;
+  background: #2a4580;
+  min-height: 334px;
+}
+.info .button {
+  background: #f5e068;
+  color: #2a4580;
+  padding: 10px;
+  margin-bottom: 20px;
+  float: left;
+}
+.info table {
+  margin-top: 20px;
+}
+.info hr {
+  border: 0.5px solid #f5e068;
+  margin-bottom: 30px;
+}
+.info h1 {
+  font-size: 20px;
+  color: #f5e068;
+  margin-bottom: 20px;
+}
+.info h4 {
+  font-size: 16px;
+  color: #f5e068;
+}
+.info .material-icons {
+  float: right;
+  color: #f5e068;
+}
+.info table td:nth-child(odd) {
+  color: #f5e068;
+}
+.info ul {
+  margin-left: 15px;
+}
+.info input {
+  height: 42px !important;
+  width: 200px !important;
+  float: left;
+}
+#car,
+#person,
+#incidenter,
+#dna {
+  display: none;
+}
+#car td a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+#person img {
+  float: left !important;
+  margin-right: 20px;
+}
+#person table {
+  width: 270px;
+  margin-bottom: 20px;
+}
+#person td {
+  padding: 0;
+}
+#person ul {
+  margin-top: 10px;
+  display: inline-block;
+  max-width: 200px;
+}
+#person ul:nth-child(odd) {
+  float: right;
+}
+#person ul .material-icons {
+  float: none;
+  vertical-align: middle;
+  margin: -4px 0 0 15px;
+  font-size: 20px;
+  color: #f16565;
+}
+.yes {
+  color: #6ff265 !important;
+}
+.no {
+  color: #f16565 !important;
+}
+#efterlys {
+  display: none;
+}
+#efterlys form h1 {
+  font-size: 14px;
+  margin-bottom: -2px;
+  color: #f5e068;
+}
+#efterlys button {
+  margin-top: 25px;
+  width: 570px;
+}
+#efterlys form {
+  margin-bottom: 30px;
+}
+#efterlys input {
+  width: 183px !important;
+}
+#efterlys ul {
+  margin: 0;
+}
+#efterlys ul .title {
+  font-size: 20px;
+  color: #f5e068;
+  margin-bottom: 10px;
+}
+#efterlys ul a {
+  color: #ffffff;
+}
+#efterlys input {
+  width: 150px;
+}
+#efterlys li {
+  margin-bottom: 5px;
+  display: inline-block;
+}
+#efterlys ul img {
+  float: left;
+  margin-right: 10px;
+}
+#efterlys ul li p {
+  float: left;
+  width: 460px;
+}
+#person-incident li {
+  max-width: 100px;
+}
+#efterlys ul .material-icons {
+  float: left;
+  margin-left: 15px;
+  font-size: 20px;
+  color: #f16565;
+}
+.input-block {
+  display: inline-block;
+}
+#regelverk {
+  display: none;
+}
+#regelverk li {
+  margin-bottom: 10px;
+}
+#regelverk p:nth-child(even) {
+  margin-left: 20px;
+}
+.paragraf {
+  font-weight: bold;
+  color: #f5e068;
+}
+#incidenter input {
+  width: 498px !important;
+}
+#incident {
+  display: none;
+}
+#incident-a textarea {
+  height: 130px;
+  resize: none;
+}
+#incident p {
+  width: 450px !important;
+  word-break: break-all;
+}
+.inc-link {
+  color: #f5e068;
+}
+.button-large {
+  width: 574px;
+  text-align: center;
+  margin-bottom: 30px !important;
+}
+#incidenter li {
+  margin-bottom: 20px;
+}
+#efterlys-content img {
+  width: 50px;
+  height: 50px;
+}
+#dna-wrapper h1 {
+  color: #ffffff !important;
+}
+.progress {
+  background: #ffffff !important;
+}
+.indeterminate {
+  background: #f5e068 !important;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
