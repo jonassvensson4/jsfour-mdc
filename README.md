@@ -37,6 +37,7 @@ För att scriptet ska fungera så behöver du använda dig av ESX.
 * Det finns en tab i menyn som inte alla ser. "Loggboken" ser endast de som har adminrättigheter i html/assets/js/passwords.js. Där loggas allt som tas bort. Där står det vem som tagit bort det och vad som togs bort
 * Minutstecknet under PERSONINFO vid efterlyst tar bort efterlysningen om personen är efterlyst. Den försvinner även om du tar bort efterlysningen från efterlys-taben
 * Vill du efterlysa någon men du saknar uppgifter om en person t.ex personnumret så kan du skriva dit Unknown, okänd eller okänt istället
+* Det finns en rad som heter besiktigad under FORDONSINFO. För tillfället går den raden inte att ändra. Den kommer alltid stå som JA på alla bilar. Det är planerat att det ska komma ett script för detta då det här är inget som polisen ska kunna ändra
 
 ### Screenshot
 ![screenshot](https://i.gyazo.com/f1686551d68855578946b48b3dce6be7.png)
