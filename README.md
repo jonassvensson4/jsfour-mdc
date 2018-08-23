@@ -35,7 +35,7 @@ För att scriptet ska fungera så behöver du använda dig av ESX.
 * För att öppna datorn så måste polisbilen så still, du klickar sedan på Y
 * För att ta bort en anmärkning på bilen eller något ur brottsregistret så klickar du på den raden du vill ta bort. Här nedan så står det Test (2018-08-10) i brottsregistret och Fortkörning (2018-07-30). Det är alltså dessa du kan klicka på så tas de bort från databasen
 * Det finns en tab i menyn som inte alla ser. "Loggboken" ser endast de som har adminrättigheter i html/assets/js/passwords.js. Där loggas allt som tas bort. Där står det vem som tagit bort det och vad som togs bort
-* Minutsteckner under PERSONINFO vid efterlyst tar bort efterlysningen om personen är efterlyst. Den försvinner även om du tar bort efterlysningen från efterlys-taben
+* Minutstecknet under PERSONINFO vid efterlyst tar bort efterlysningen om personen är efterlyst. Den försvinner även om du tar bort efterlysningen från efterlys-taben
 * Vill du efterlysa någon men du saknar uppgifter om en person t.ex personnumret så kan du skriva dit Unknown, okänd eller okänt istället
 
 ### Screenshot
