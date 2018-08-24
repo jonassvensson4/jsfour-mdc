@@ -1,7 +1,7 @@
 // Password + lastdigits - links the password to the player
 const passwords = {
   'test123' : 1234,
-  'test' : 1234, // example1 will be the password, 1234 will be the lastdigits of the player
+  'test' : 1234, // test will be the password, 1234 will be the lastdigits of the player
   't2est' : 1234,
   'te21s2t' : 1234,
   'tes2t' : 1234,
