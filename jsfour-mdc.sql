@@ -6,24 +6,25 @@ CREATE TABLE `jsfour_incidents` (
 	`text` VARCHAR(255) NULL,
 	`uploader` VARCHAR(255) NULL,
 	`date` VARCHAR(255) NULL,
-	PRIMARY KEY (`pk`));
+	PRIMARY KEY (`pk`)
 );
 
-CREATE TABLE `jsfour_carinspection` (
-	`pk` INT NOT NULL,
-	`plate` VARCHAR(255) NULL,
-	`owner` VARCHAR(255) NULL,
-	`incident` VARCHAR(255) NULL,
-	`inspected` VARCHAR(255) NULL,
-	PRIMARY KEY (`pk`));
+CREATE TABLE `jsfour_cardetails` (
+	`pk` int(11) NOT NULL AUTO_INCREMENT,
+  	`plate` varchar(255) NULL DEFAULT,
+ 	`owner` varchar(255) NULL DEFAULT,
+  	`incident` varchar(255) NOT NULL DEFAULT '{}',
+  	`inspected` varchar(255) NULL DEFAULT,
+  	`identifier` varchar(255) NULL DEFAULT,
+  	PRIMARY KEY (`pk`)
 );
 
 CREATE TABLE `jsfour_logs` (
 	`pk` int(11) NOT NULL AUTO_INCREMENT,
-	`type` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-	`remover` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-	`wanted` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL,
-	PRIMARY KEY (`pk`);
+	`type` varchar(255) NULL DEFAULT,
+	`remover` varchar(255) NULL DEFAULT,
+	`wanted` varchar(255) NULL DEFAULT,
+	PRIMARY KEY (`pk`)
 );
 
 CREATE TABLE `jsfour_efterlysningar` (
