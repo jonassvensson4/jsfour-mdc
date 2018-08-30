@@ -5,48 +5,53 @@ math.randomseed(os.time())
 
 -- SAVE data to the database
 ESX.RegisterServerCallback('jsfour-mdc:save', function(source, cb, data)
+  print(data.lastdigits)
   MySQL.Async.fetchAll('SELECT firstname, lastname FROM users WHERE lastdigits = @lastdigits', {['@lastdigits'] = data.lastdigits},
   function (result)
-    local uploader  = result[1].firstname .. ' ' .. result[1].lastname
-    local number    = string.char(math.random(97, 122)) .. math.random(100, 9999)
-    if data.type == 'incident' then
-      MySQL.Async.execute('INSERT INTO jsfour_incidents (number, text, uploader, date) VALUES (@number, @text, @uploader, @date)',
-        {
-          ['@number']   = number,
-          ['@text']     = data.text,
-          ['@uploader'] = uploader,
-          ['@date']     = os.date("%Y-%m-%d")
-        }
-      )
-      cb(number)
-    elseif data.type == 'car' then
-      MySQL.Async.fetchAll('SELECT incident FROM jsfour_cardetails WHERE plate = @plate', {['@plate'] = data.plate},
-      function (result)
-        if result[1] ~= nil then
-          local incidents = {}
-          local incident = json.decode(result[1].incident)
+    if result[1] ~= nil then
+      local uploader  = result[1].firstname .. ' ' .. result[1].lastname
+      local number    = string.char(math.random(97, 122)) .. math.random(100, 9999)
+      if data.type == 'incident' then
+        MySQL.Async.execute('INSERT INTO jsfour_incidents (number, text, uploader, date) VALUES (@number, @text, @uploader, @date)',
+          {
+            ['@number']   = number,
+            ['@text']     = data.text,
+            ['@uploader'] = uploader,
+            ['@date']     = os.date("%Y-%m-%d")
+          }
+        )
+        cb(number)
+      elseif data.type == 'car' then
+        MySQL.Async.fetchAll('SELECT incident FROM jsfour_cardetails WHERE plate = @plate', {['@plate'] = data.plate},
+        function (result)
+          if result[1] ~= nil then
+            local incidents = {}
+            local incident = json.decode(result[1].incident)
 
-          for i=1, #incident, 1 do
-            table.insert(incidents, incident[i])
+            for i=1, #incident, 1 do
+              table.insert(incidents, incident[i])
+            end
+
+            table.insert(incidents, data.incident .. ' ('..os.date("%Y-%m-%d")..')')
+
+            MySQL.Async.execute('UPDATE jsfour_cardetails SET incident = @incident WHERE plate = @plate', {['@incident'] = json.encode(incidents), ['@plate'] = data.plate})
+            cb('updated')
           end
-
-          table.insert(incidents, data.incident .. ' ('..os.date("%Y-%m-%d")..')')
-
-          MySQL.Async.execute('UPDATE jsfour_cardetails SET incident = @incident WHERE plate = @plate', {['@incident'] = json.encode(incidents), ['@plate'] = data.plate})
-          cb('updated')
-        end
-      end)
-    elseif data.type == 'efterlysning' then
-      MySQL.Async.execute('INSERT INTO jsfour_efterlysningar (wanted, dob, crime, uploader, date, incident) VALUES (@wanted, @dob, @crime, @uploader, @date, @incident)',
-        {
-          ['@wanted']   = data.wanted,
-          ['@dob']      = data.dob,
-          ['@crime']    = data.crime,
-          ['@uploader'] = uploader,
-          ['@date']     = os.date("%Y-%m-%d"),
-          ['@incident'] = data.incident
-        }
-      )
+        end)
+      elseif data.type == 'efterlysning' then
+        MySQL.Async.execute('INSERT INTO jsfour_efterlysningar (wanted, dob, crime, uploader, date, incident) VALUES (@wanted, @dob, @crime, @uploader, @date, @incident)',
+          {
+            ['@wanted']   = data.wanted,
+            ['@dob']      = data.dob,
+            ['@crime']    = data.crime,
+            ['@uploader'] = uploader,
+            ['@date']     = os.date("%Y-%m-%d"),
+            ['@incident'] = data.incident
+          }
+        )
+      end
+    else
+      print('JSFOUR-MDC ERROR - WRONG LASTDIGITS IN PASSWORDS.JS COULDNT FIND THE USER WITH LASTDIGITS: ' .. data.lastdigits)
     end
   end)
 end)
