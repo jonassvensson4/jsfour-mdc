@@ -5,7 +5,6 @@ math.randomseed(os.time())
 
 -- SAVE data to the database
 ESX.RegisterServerCallback('jsfour-mdc:save', function(source, cb, data)
-  print(data.lastdigits)
   MySQL.Async.fetchAll('SELECT firstname, lastname FROM users WHERE lastdigits = @lastdigits', {['@lastdigits'] = data.lastdigits},
   function (result)
     if result[1] ~= nil then
