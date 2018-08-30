@@ -100,10 +100,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     function (result)
       if result[1] ~= nil then
         for i=1, #result, 1 do
-          print(result[i]['plate'])
-          print(data.plate)
           if result[i]['plate'] == data.plate then
-            print("go")
             found = true
             local identifier = result[i]['owner']
             MySQL.Async.fetchAll('SELECT firstname, lastname, dateofbirth, lastdigits FROM users WHERE identifier = @identifier', {['@identifier'] = identifier},
