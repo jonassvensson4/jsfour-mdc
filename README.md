@@ -30,6 +30,7 @@ För att scriptet ska fungera så behöver du använda dig av ESX.
 * Använder du inte mitt <a href="https://github.com/jonassvensson4/jsfour-brottsregister">jsfour-brottsregister<a/> så kommer du förmodligen få en error, rekommenderar dig att använda det. Alternativt ändra om i server.lua
 * Har du lagt till egna polisbilar så måste du lägga till modellnamnet i config.lua
 * Lägg till alla poliser i html/assets/js/passwords.js. Det står vad som behvövs där. Vid nyrekrytering så måste scriptet alltså startas om. Alternativt så får den personen använda något annat lösenord tillsvidare
+* Har du den senaste versionen av esx_vehicleshop så måste du ersätta orginalfilerna med de som ligger i mappen optional
   
 ### GUIDE
 * För att öppna datorn så måste polisbilen så still, du klickar sedan på Y
