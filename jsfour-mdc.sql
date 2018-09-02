@@ -1,7 +1,7 @@
 USE `essentialmode`;
 
 CREATE TABLE `jsfour_incidents` (
-	`pk` INT NOT NULL,
+	`pk` int(11) NOT NULL AUTO_INCREMENT,
 	`number` VARCHAR(255) NULL,
 	`text` VARCHAR(255) NULL,
 	`uploader` VARCHAR(255) NULL,
@@ -28,7 +28,7 @@ CREATE TABLE `jsfour_logs` (
 );
 
 CREATE TABLE `jsfour_efterlysningar` (
-	`pk` INT NOT NULL,
+	`pk` int(11) NOT NULL AUTO_INCREMENT,
 	`wanted` VARCHAR(255) NULL,
 	`dob` VARCHAR(255) NULL,
 	`crime` VARCHAR(255) NULL,
