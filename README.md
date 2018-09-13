@@ -1,5 +1,4 @@
 # jsfour-mdc
-DET KAN FINNAS BUGGAR I SCRIPTET, HITTAR DU NÅGOT SOM INTE FUNGERAR SÅ SKRIV TILL MIG PÅ DISCORD jonassvensson4#3011
 
 Mobile Data Computer, en polisdator som finns i alla polisbilar där du kan göra följande:
 
