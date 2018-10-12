@@ -329,7 +329,17 @@ $(document).ready(function(){
     } else if ( page == 'dna' ) {
       $.post('http://jsfour-dna/upload', JSON.stringify({}), function(cb) {
         if ( cb == 'error') {
+          $('#' + win).hide();
+          $('#start').show();
+          win = 'start';
           error('Du har inget DNA på dig..', 2000, '#7a2323');
+        } else {
+          setTimeout(function(){
+            $('#' + win).hide();
+            $('#start').show();
+            win = 'start';
+            error('Uppladdad!', 1000, '#347a23');
+          }, 3000);
         }
       });
     } else if ( page == 'incidenter' ) {
