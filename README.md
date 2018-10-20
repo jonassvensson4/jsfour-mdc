@@ -26,7 +26,7 @@ För att scriptet ska fungera så behöver du använda dig av ESX.
 * Kör SQL-filen, får du error så får du importera de manuellt. Vissa (dåliga) SQL-program klarar inte av primary keys
 * Lägg till lastdigits i tabellerna users och characters, <a href="https://github.com/jonassvensson4/jsfour-register">jsfour-register<a/> har en SQL-fil du kan köra
   - Du måste ha ett script, alternativt lägga in lastdigits själv på alla användare då scriptet kräver detta. Du kan även använda mitt jsfour-register
-* Använder du inte mitt <a href="https://github.com/jonassvensson4/jsfour-brottsregister">jsfour-brottsregister<a/> så kommer du förmodligen få en error, rekommenderar dig att använda det. Alternativt ändra om i server.lua
+* Använder du inte mitt <a href="https://github.com/jonassvensson4/jsfour-brottsregister">jsfour-brottsregister<a/> så kommer du förmodligen få en error, rekommenderar dig att använda det. Alternativt ändra om i server.lua Det fungerar även att använda mitt <a href="https://github.com/jonassvensson4/jsfour-criminalrecord">jsfour-criminalrecord<a/> scvript men då får du använda filerna som ligger i jsfour-criminalrecord mappen istället.
 * Har du lagt till egna polisbilar så måste du lägga till modellnamnet i config.lua
 * Lägg till alla poliser i html/assets/js/passwords.js. Det står vad som behvövs där. Vid nyrekrytering så måste scriptet alltså startas om. Alternativt så får den personen använda något annat lösenord tillsvidare
 * Har du den senaste versionen av esx_vehicleshop så måste du ersätta orginalfilerna med de som ligger i mappen optional
