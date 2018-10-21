@@ -58,7 +58,7 @@ $(document).ready(function(){
 
         if (cb['brottsregister'] != null) {
           Object.keys(cb['brottsregister']).forEach(function(k) {
-            $('#person-brottsregister').append('<li class="remove" type="brottsregister" lastdigits="'+lastdigits+'" crime="'+cb['brottsregister'][k].crime+'" date="'+cb['brottsregister'][k].dateofcrime+'">'+cb['brottsregister'][k].crime+' ('+cb['brottsregister'][k].dateofcrime+') '+'</li>');
+            $('#person-brottsregister').append('<li class="remove" type="brottsregister" offense="'+cb['brottsregister'][k].offense+'" dob="'+cb['brottsregister'][k].dob+'">'+cb['brottsregister'][k].description+' ('+cb['brottsregister'][k].date+') '+'</li>');
           });
         }
       } else {
@@ -77,8 +77,15 @@ $(document).ready(function(){
     $('#car').show();
     $('#car-comments').html('');
     win = 'car';
-    plate = input;
-    $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'car', plate : input}), function(cb) {
+
+    if (input.length < 7) {
+      plate = input.substring(0,3) + ' ' + input.substring(3,6);
+    } else {
+      plate = input;
+    }
+
+    plate = plate.toUpperCase();
+    $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'car', plate : plate}), function(cb) {
       if ( cb != 'error' && cb != 'rerun' ) {
         $('#car-owner').text(cb['result'][0].firstname + ' ' + cb['result'][0].lastname).attr('dob', cb['result'][0].dateofbirth + '-'+ cb['result'][0].lastdigits);
         $('#car-inspected').text(cb['carDetails'][0].inspected);
@@ -271,7 +278,7 @@ $(document).ready(function(){
       });
     } else if ( type == 'brottsregister' ) {
       $(this).remove();
-      $.post('http://jsfour-mdc/remove', JSON.stringify({type : 'brottsregister', lastdigits : $(this).attr('lastdigits'), crime : $(this).attr('crime'), date : $(this).attr('date'), signedin : signedInUser}), function(cb) {
+      $.post('http://jsfour-mdc/remove', JSON.stringify({type : 'brottsregister', dob : $(this).attr('dob'), offense : $(this).attr('offense'), signedin : signedInUser}), function(cb) {
         error('Borttagen!', 500, '#347a23');
       });
     } else if ( type == 'efterlysning' ) {
@@ -329,17 +336,7 @@ $(document).ready(function(){
     } else if ( page == 'dna' ) {
       $.post('http://jsfour-dna/upload', JSON.stringify({}), function(cb) {
         if ( cb == 'error') {
-          $('#' + win).hide();
-          $('#start').show();
-          win = 'start';
           error('Du har inget DNA på dig..', 2000, '#7a2323');
-        } else {
-          setTimeout(function(){
-            $('#' + win).hide();
-            $('#start').show();
-            win = 'start';
-            error('Uppladdad!', 1000, '#347a23');
-          }, 3000);
         }
       });
     } else if ( page == 'incidenter' ) {
