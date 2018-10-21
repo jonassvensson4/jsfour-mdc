@@ -95,28 +95,19 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     end)
   elseif data.type == 'car' then
     local found = false
-    local result
-    local carDetails
 
     MySQL.Async.fetchAll('SELECT * FROM owned_vehicles', {},
     function (result)
       if result[1] ~= nil then
-        local vehicles = {}
-
         for i=1, #result, 1 do
-          local vehicleData = json.decode(result[i].vehicle)
-          table.insert(vehicleData, result[i].owner)
-          table.insert(vehicles, vehicleData)
-        end
-
-        for i=1, #vehicles, 1 do
-          if vehicles[i]['plate'] == data.plate then
+          if result[i]['plate'] == data.plate then
             found = true
-            MySQL.Async.fetchAll('SELECT firstname, lastname, dateofbirth, lastdigits FROM users WHERE identifier = @identifier', {['@identifier'] = vehicles[i][1]},
+            local identifier = result[i]['owner']
+            MySQL.Async.fetchAll('SELECT firstname, lastname, dateofbirth, lastdigits FROM users WHERE identifier = @identifier', {['@identifier'] = identifier},
             function (result)
               if result[1] ~= nil then
                 result = result
-                MySQL.Async.fetchAll('SELECT owner, incident, inspected FROM jsfour_cardetails WHERE identifier = @identifier AND plate = @plate', {['@identifier'] = vehicles[i][1], ['@plate'] = vehicles[i]['plate']},
+                MySQL.Async.fetchAll('SELECT owner, incident, inspected FROM jsfour_cardetails WHERE identifier = @identifier AND plate = @plate', {['@identifier'] = identifier, ['@plate'] = data.plate},
                 function (carDetails)
                   if carDetails[1] ~= nil then
                     local carDetails   = carDetails
@@ -140,7 +131,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
                         ['@plate']      = data.plate,
                         ['@owner']      = result[1].firstname .. ' ' .. result[1].lastname,
                         ['@inspected']  = 'Ja',
-                        ['@identifier'] = vehicles[i][1]
+                        ['@identifier'] = identifier
                       }
                     )
 
@@ -149,7 +140,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
                 end)
               end
             end)
-          elseif not found and i == #vehicles then
+          elseif not found and i == #result then
             cb('error')
           end
         end
@@ -162,11 +153,11 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     local brottsregister
     local efterlysningar
 
-    MySQL.Async.fetchAll('SELECT firstname, lastname, dateofbirth, height, sex, phone_number FROM users WHERE dateofbirth = @dateofbirth AND lastdigits = @lastdigits', {['@dateofbirth'] = data.dob, ['@lastdigits'] = data.lastdigits},
+    MySQL.Async.fetchAll('SELECT identifier, firstname, lastname, dateofbirth, height, sex, phone_number FROM users WHERE dateofbirth = @dateofbirth AND lastdigits = @lastdigits', {['@dateofbirth'] = data.dob, ['@lastdigits'] = data.lastdigits},
     function (result)
       if result[1] ~= nil then
         result = result
-        MySQL.Async.fetchAll('SELECT dateofcrime, crime FROM jsfour_brottsregister WHERE dateofbirth = @dateofbirth AND lastdigits = @lastdigits', {['@dateofbirth'] = data.dob, ['@lastdigits'] = data.lastdigits},
+        MySQL.Async.fetchAll('SELECT * FROM jsfour_criminalrecord WHERE dob = @dob AND identifier = @identifier', {['@dob'] = data.dob, ['@identifier'] = result[1].identifier},
         function (brottsregister)
           if brottsregister[1] ~= nil then
             brottsregister = brottsregister
@@ -203,7 +194,19 @@ ESX.RegisterServerCallback('jsfour-mdc:remove', function(source, cb, data)
   elseif data.type == 'incident' then
     MySQL.Async.execute('DELETE FROM jsfour_incidents WHERE number = @number',{ ['@number'] = data.incident})
   elseif data.type == 'brottsregister' then
-    MySQL.Async.execute('DELETE FROM jsfour_brottsregister WHERE lastdigits = @lastdigits AND crime = @crime AND dateofcrime = @date',{['@lastdigits'] = data.lastdigits, ['@crime'] = data.crime, ['@date'] = data.date})
+    MySQL.Async.fetchAll('SELECT identifier FROM jsfour_criminalrecord WHERE offense = @offense', {['@offense'] = data.offense},
+  	function (resultID)
+  		MySQL.Async.fetchAll('SELECT * FROM jsfour_criminalrecord WHERE identifier = @identifier', {['@identifier'] = resultID[1].identifier},
+  		function (resultAll)
+  			if #resultAll < 2 then
+  				MySQL.Async.execute('DELETE FROM jsfour_criminaluserinfo WHERE identifier = @identifier',{ ['@identifier'] = resultID[1].identifier})
+  				MySQL.Async.execute('DELETE FROM jsfour_criminalrecord WHERE offense = @offense',{ ['@offense'] = data.offense})
+  			else
+  				MySQL.Async.execute('DELETE FROM jsfour_criminalrecord WHERE offense = @offense',{ ['@offense'] = data.offense})
+  			end
+  			cb('ok')
+  		end)
+  	end)
   elseif data.type == 'car' then
     MySQL.Async.fetchAll('SELECT incident FROM jsfour_cardetails WHERE plate = @plate', {['@plate'] = data.plate},
     function (result)
