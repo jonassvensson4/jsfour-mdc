@@ -153,7 +153,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     local brottsregister
     local efterlysningar
 
-    MySQL.Async.fetchAll('SELECT identifier, firstname, lastname, dateofbirth, height, sex, phone_number FROM users WHERE dateofbirth = @dateofbirth AND lastdigits = @lastdigits', {['@dateofbirth'] = data.dob, ['@lastdigits'] = data.lastdigits},
+    MySQL.Async.fetchAll('SELECT identifier, firstname, lastname, dateofbirth, height, sex, phone_number FROM users WHERE lastdigits = @lastdigits', {['@lastdigits'] = data.lastdigits},
     function (result)
       if result[1] ~= nil then
         result = result
