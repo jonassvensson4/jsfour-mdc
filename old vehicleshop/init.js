@@ -41,7 +41,7 @@ $(document).ready(function(){
     $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'person', dob : oDOB, lastdigits : lastdigits}), function(cb) {
       if (cb != 'error') {
         $('#person-brottsregister').html('<h4>Brottsregister:</h4>');
-        $('#person-personnummer').text(oDOB +'-'+ lastdigits);
+        $('#person-personnummer').text(cb['result'][0].dateofbirth +'-'+ lastdigits);
         $('#person-name').text(cb['result'][0].firstname + ' ' + cb['result'][0].lastname);
         $('#person-height').text(cb['result'][0].height);
         $('#person-sex').text(cb['result'][0].sex);
