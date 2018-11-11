@@ -78,13 +78,7 @@ $(document).ready(function(){
     $('#car-comments').html('');
     win = 'car';
 
-    if (input.length < 7) {
-      plate = input.substring(0,3) + ' ' + input.substring(3,6);
-    } else {
-      plate = input;
-    }
-
-    plate = plate.toUpperCase();
+    plate = input.toUpperCase();
     $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'car', plate : plate}), function(cb) {
       if ( cb != 'error' && cb != 'rerun' ) {
         $('#car-owner').text(cb['result'][0].firstname + ' ' + cb['result'][0].lastname).attr('dob', cb['result'][0].dateofbirth + '-'+ cb['result'][0].lastdigits);
