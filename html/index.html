@@ -12,18 +12,18 @@
         <p id="error"></p>
         <div id="header">
           <img src="" alt="logo" draggable="false"/>
-          <p>09:00</p>
+          <p></p>
         </div>
         <div id="content">
           <div id="login">
             <form type="login" class="nospace">
-              <input placeholder="Lösenord" type="password"/>
+              <input placeholder="Password" type="password"/>
             </form>
           </div>
           <div id="start">
             <ul class="block">
               <li class="header">
-              	<h1>Registreringsnummer</h1>
+              	<h1>Plate</h1>
               	<form type="car" class="nospace">
               	  <input placeholder="ABC123"/>
               	</form>
@@ -35,9 +35,9 @@
             </ul>
             <ul class="block">
               <li class="header">
-              	<h1>Personnummer</h1>
+              	<h1>Date of birth</h1>
               	<form type="person" class="nospace">
-              	  <input placeholder="ååmmdd-xxxx"/>
+              	  <input placeholder="yymmdd-xxxx"/>
               	</form>
               	<a href="#!" class="search"><i class="material-icons">person</i></a>
               </li>
@@ -46,22 +46,22 @@
               </div>
             </ul>
             <div class="block block-buttons">
-              <a href="#!" class="waves-effect btn-flat" page="efterlys">EFTERLYS</a>
-              <a href="#!" class="waves-effect btn-flat" page="regelverk">REGELVERK</a>
+              <a href="#!" class="waves-effect btn-flat" page="efterlys">WANTED</a>
+              <a href="#!" class="waves-effect btn-flat" page="regelverk">REGULATIONS</a>
               <a href="#!" class="waves-effect btn-flat" page="dna">DNA</a>
-              <a href="#!" class="waves-effect btn-flat" page="incidenter">INCIDENTER</a>
-              <a href="#!" class="waves-effect btn-flat" class="admin" page="admin">LOGGBOK</a>
+              <a href="#!" class="waves-effect btn-flat" page="incidenter">INCIDENTS</a>
+              <a href="#!" class="waves-effect btn-flat" class="admin" page="admin">LOGS</a>
             </div>
           </div>
           <div id="admin" class="info">
             <a href="#!" class="close"><i class="material-icons">close</i></a>
-            <h1>LOGGBOK</h1>
+            <h1>LOGS</h1>
             <hr />
             <table>
               <thead>
                 <tr>
-                  <td>Typ</td>
-                  <td>Borttagen av</td>
+                  <td>Type</td>
+                  <td>Removed by</td>
                   <td>ID</td>
                 </tr>
               </thead>
@@ -72,24 +72,24 @@
           </div>
           <div id="car" class="info">
             <a href="#!" class="close"><i class="material-icons">close</i></a>
-            <h1>FORDONSINFO</h1>
+            <h1>CAR INFORMATION</h1>
             <hr />
             <form type="new-car">
-              <input id="new-car" placeholder="Anledning"/>
+              <input id="new-car" placeholder="Note"/>
             </form>
-            <a href="#!" class="button" id="add-car-info">Ny anmärkning</a>
+            <a href="#!" class="button" id="add-car-info">ADD</a>
             <table>
               <tbody>
                 <tr>
-                  <td>Ägare:</td>
-                  <td><a href="#!" id="car-owner" class="user" type="car">Laddar..</a></td>
+                  <td>Owner:</td>
+                  <td><a href="#!" id="car-owner" class="user" type="car">Loading..</a></td>
                 </tr>
                 <tr>
-                  <td>Besiktigad:</td>
-                  <td id="car-inspected">Laddar..</td>
+                  <td>Inspected:</td>
+                  <td id="car-inspected">Loading..</td>
                 </tr>
                 <tr>
-                  <td>Anmärkningar:</td>
+                  <td>Notes:</td>
                 </tr>
               </tbody>
             </table>
@@ -99,71 +99,71 @@
           </div>
           <div id="person" class="info">
             <a href="#!" class="close"><i class="material-icons">close</i></a>
-            <h1>PERSONINFO</h1>
+            <h1>PERSONAL INFORMATION</h1>
             <hr />
             <img src="assets/images/user.png" alt="IMG" draggable="false"/>
             <table>
               <tbody>
                 <tr>
-                  <td>Namn:</td>
-                  <td id="person-name">Laddar..</td>
+                  <td>Name:</td>
+                  <td id="person-name">Loading..</td>
                 </tr>
                 <tr>
-                  <td>Födelsedatum:</td>
-                  <td id="person-personnummer">Laddar..</td>
+                  <td>Date of birth:</td>
+                  <td id="person-personnummer">Loading..</td>
                 </tr>
                 <tr>
-                  <td>Kön:</td>
-                  <td id="person-sex">Laddar..</td>
+                  <td>Sex:</td>
+                  <td id="person-sex">Loading..</td>
                 </tr>
                 <tr>
-                  <td>Längd:</td>
-                  <td id="person-height">Laddar..</td>
+                  <td>Height:</td>
+                  <td id="person-height">Loading..</td>
                 </tr>
                 <tr>
-                  <td>Telefonnummer:</td>
-                  <td id="person-phone">Laddar..</td>
+                  <td>Phone number:</td>
+                  <td id="person-phone">Loading..</td>
                 </tr>
               </tbody>
             </table>
             <ul id="person-brottsregister">
-              <h4>Brottsregister:</h4>
+              <h4>Criminal record:</h4>
             </ul>
             <ul id="person-incident">
-              <h4>Efterlyst: <b></b><a href="#!" class="remove" dob="" type="efterlysning" title="Ta bort"><i class="material-icons">remove_circle_outline</i></a></h4>
+              <h4>Wanted: <b></b><a href="#!" class="remove" dob="" type="efterlysning" title="Ta bort"><i class="material-icons">remove_circle_outline</i></a></h4>
               <li><a href="#!" class="inc-link"></a></li>
             </ul>
           </div>
           <div id="efterlys" class="info">
             <a href="#!" class="close"><i class="material-icons">close</i></a>
-            <h1>EFTERLYS</h1>
+            <h1>WANTED</h1>
             <hr />
             <form id="efterlys-form">
               <div class="input-block">
-                <h1>Förnamn</h1>
-                <input placeholder="Sven" id="efterlys-firstname" required/>
+                <h1>Firstname</h1>
+                <input placeholder="Jonas" id="efterlys-firstname" required/>
               </div>
               <div class="input-block">
-                <h1>Efternamn</h1>
+                <h1>Lastname</h1>
                 <input placeholder="Svensson" id="efterlys-lastname" required/>
               </div>
               <div class="input-block">
-                <h1>Personnummer</h1>
-                <input placeholder="ååmmdd-xxxx" id="efterlys-personnummer" required/>
+                <h1>Date of birth</h1>
+                <input placeholder="yymmdd-xxxx" id="efterlys-personnummer" required/>
               </div>
               <div class="input-block">
-                <h1>Brott</h1>
-                <input placeholder="Misstänkt för mord.." id="efterlys-crime" required/>
+                <h1>Crime</h1>
+                <input placeholder="Murder.." id="efterlys-crime" required/>
               </div>
               <div class="input-block">
                 <h1>Incident</h1>
-                <input placeholder="Incident-nummer" id="efterlys-incident" required/>
+                <input placeholder="Incident number" id="efterlys-incident" required/>
               </div>
-              <button id="efterlys-submit" class="waves-effect btn-flat">Efterlys</button>
+              <button id="efterlys-submit" class="waves-effect btn-flat">ADD</button>
             </form>
             <hr />
             <ul>
-              <p class="title">Efterlysta:</p>
+              <p class="title">Wanted:</p>
               <div id="efterlys-content">
 
               </div>
@@ -171,7 +171,7 @@
           </div>
           <div id="regelverk" class="info">
             <a href="#!" class="close"><i class="material-icons">close</i></a>
-            <h1>REGELVERK</h1>
+            <h1>REGULATIONS</h1>
             <hr />
             <ul>
 
@@ -179,17 +179,17 @@
           </div>
           <div id="incidenter" class="info">
             <a href="#!" class="close"><i class="material-icons">close</i></a>
-            <h1>INCIDENTER</h1>
+            <h1>INCIDENTS</h1>
             <hr />
             <form class="nospace" type="incident">
-              <input placeholder="Incident-nummer"/>
+              <input placeholder="Incident number"/>
             </form>
-            <a href="#!" class="button waves-effect" id="incident-search">ÖPPNA</a>
+            <a href="#!" class="button waves-effect" id="incident-search">OPEN</a>
             <div id="incident-a">
               <form>
                 <textarea id="incident-text" required></textarea>
               </form>
-              <a href="#!" class="button button-large waves-effect" id="incident-add">LÄGG TILL</a>
+              <a href="#!" class="button button-large waves-effect" id="incident-add">ADD</a>
               <ul>
 
               </ul>
@@ -202,7 +202,7 @@
           </div>
           <div id="dna" class="info">
             <a href="#!" class="close"><i class="material-icons">close</i></a>
-            <h1>DNA - Laddar upp</h1>
+            <h1>DNA - Uploading..</h1>
             <div class="progress">
                 <div class="indeterminate"></div>
             </div>
