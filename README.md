@@ -1,46 +1,48 @@
 # jsfour-mdc
 
-Mobile Data Computer, en polisdator som finns i alla polisbilar där du kan göra följande:
+Mobile Data Computer, a computer that can be access from every police car:
 
-(OBS! Kolla på bilderna längst ner för att lättare förstå)
+(NOTE! Check the screenshots at the bottom to understand it better)
 
-* Söka efter personer via personnummer
-  - Här kan du se om en person är efterlyst och dess brottsregistret, även lite grundläggande information. Den hämtar brotts-inforamtion från mitt brottsregister-script
-* Söka upp bilar via reggnummer
-  - Här ser du vem som äger bilen, om bilen har fått några anmärkningar vid tidigare kontroll samt om den är besiktigad
-* Skriva incidenter
-  - Här kan du skriva ned olika händelser som sker vid ett brott för att senare skapa en efterlysning så kollegorna vet varför personen är efterlyst
-* Efterlysningar
-  - Här kan du se alla personer som är efterlysta samt lägga in efterlysningar
+* Search for a person by using the date of birth
+  - You can see if the person is wanted or not and some basic information about the person. It also fetches information from my criminal record which is also displayed at the page.
+* Search cars by the plate
+  - You can see who owns the car, if the car has any notes and if the car has been inspected (It will always say YES for now)
+  - Notes = If someone is speeding you can add a note to the car. If the car gets pulled over a second time the officer will see that note. It's a way to keep track of all the violations. 
+* Add a incident
+  - If someone commits a crime you can add it as an incident which every officer will see. Or if someone want to report a crime you could also make an incident.
+* Wanted-tab
+  - Make a person wanted and see who's wanted
 * DNA
-  - För er som använder mitt DNA-script så kan man nu ladda upp DNA via den här datorn. För er som inte använder det så bortse från den funktionen.
-* Regelverk
-  - Mest en utfyllnadsgrej men kan vara trevligt att ha om poliserna måste kolla upp någon lag
+  - If you're using my jsfour-dna you can now upload it from the car. If you're not using my dna-script you can ignore this feature.
+* Regulations
+  - Mostly there to fill out the space. You can add rules/laws and whaterver you want the officers to see
 
 ### LICENSE
-Du får mer än gärna ändra vad du vill i scriptet men du får INTE sälja vidare scriptet eller ladda upp det på nytt, hänvisa folket hit istället.
+Please don't sell or reupload this resource
 
 ### INSTALLATION
-För att scriptet ska fungera så behöver du använda dig av ESX.
+* You need to have ESX installed
+* The folder needs to have the name **jsfour-mdc** nothing else will work
+* Run the SQL-file
 
-* Kör SQL-filen, får du error så får du importera de manuellt. Vissa (dåliga) SQL-program klarar inte av primary keys
-* Lägg till lastdigits i tabellerna users och characters, <a href="https://github.com/jonassvensson4/jsfour-register">jsfour-register<a/> har en SQL-fil du kan köra
-  - Du måste ha ett script, alternativt lägga in lastdigits själv på alla användare då scriptet kräver detta. Du kan även använda mitt jsfour-register
-* Använder du inte mitt <a href="https://github.com/jonassvensson4/jsfour-criminalrecord">jsfour-criminalrecord<a/> så kommer du förmodligen få en error, rekommenderar dig att använda det. Alternativt ändra om i server.lua
-* Har du lagt till egna polisbilar så måste du lägga till modellnamnet i config.lua
-* Lägg till alla poliser i html/assets/js/passwords.js. Det står vad som behvövs där. Vid nyrekrytering så måste scriptet alltså startas om. Alternativt så får den personen använda något annat lösenord tillsvidare
-* Se till att du har den senaste versionen av esx_vehicleshop
+* Add lastdigits in the table users and characters, <a href="https://github.com/jonassvensson4/jsfour-register">jsfour-register<a/> has an SQL-file you can run.
+  - You need to have a script, or add the lastdigits manually to every player. Or you could use my jsfour-register
+* If you doesn't use my <a href="https://github.com/jonassvensson4/jsfour-criminalrecord">jsfour-criminalrecord<a/> you'll probably get an error so I recommend you to use it. Or make some changes in the server.lua
+* If you've added custom car-models for the police cars you might have to add them to the config.lua
+* Add all the officers lastdigits with a password to html/assets/js/passwords.js. There's more inforamtion in that file. If someone becomes a officer while the server is running the script will need a restart OR they could just use someone elses password meanwhile.
+* Make sure you're using the latest version of esx_vehicleshop
   
 ### GUIDE
-* För att öppna datorn så måste polisbilen så still, du klickar sedan på Y
-* För att ta bort en anmärkning på bilen eller något ur brottsregistret så klickar du på den raden du vill ta bort. Här nedan så står det Test (2018-08-10) i brottsregistret och Fortkörning (2018-07-30). Det är alltså dessa du kan klicka på så tas de bort från databasen
-* Det finns en tab i menyn som inte alla ser. "Loggboken" ser endast de som har adminrättigheter i html/assets/js/passwords.js. Där loggas allt som tas bort. Där står det vem som tagit bort det och vad som togs bort
-* Minutstecknet under PERSONINFO vid efterlyst tar bort efterlysningen om personen är efterlyst. Den försvinner även om du tar bort efterlysningen från efterlys-taben
-* Vill du efterlysa någon men du saknar uppgifter om en person t.ex personnumret så kan du skriva dit Unknown, okänd eller okänt istället
-* Det finns en rad som heter besiktigad under FORDONSINFO. För tillfället går den raden inte att ändra. Den kommer alltid stå som JA på alla bilar. Det är planerat att det ska komma ett script för detta då det här är inget som polisen ska kunna ändra
-* Vill du lägga till lagar i REGELVERKET så gör du det i html/assets/js/regelverk.js
+* To be able to open the computer the car can't be moving. Press Y to open it
+* If you want to remove a Note from a vehicle you simply press the note you want to remove. So in the screenshot there's a note called "Fortkörning (2018-07-30)". Same goes for the criminal record under the PERSONAL INFORMATIO tab. You simply click the "Test (2018-08-10)" and it will be removed from the database.
+* There's a tab at the bottom called LOGS. Only the officers within the admin-section in html/assets/js/passwords.js is able to see that tab. You can see everything that has been removed in this tab
+* The minus-circle icon under the PERSONAL INFORMATION tab will remove the wanted from that person. It will also be removed if you remove the wanted from the wanted-tab 
+* If you want to make someone wanted but you don't know their DOB you can use enter Unknown as DOB.
+* There's a row under the CAR INFO tab where it says "inspected". This can't be changed at the moment so it will say YES on every car.
+* If you want to change stuff in the regulations you'll find that file here: html/assets/js/regelverk.js
 
-### Screenshot
+### Screenshots
 ![screenshot](https://i.gyazo.com/f1686551d68855578946b48b3dce6be7.png)
 ![screenshot](https://i.gyazo.com/dbd27b12f6df5ad8784ddd63eb23afdc.png)
 ![screenshot](https://i.gyazo.com/3859cdd56e2be8a5a18c8ea4f4c0a2d7.png)
