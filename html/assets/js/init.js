@@ -31,7 +31,8 @@ $(document).ready(function(){
     win = 'person';
     $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'person', lastdigits : lastdigits}), function(cb) {
       if (cb != 'error') {
-        $('#person-brottsregister').html('<h4>Brottsregister:</h4>');
+        cb = JSON.parse(cb);
+        $('#person-brottsregister').html('<h4>Criminal record:</h4>');
         $('#person-personnummer').text(cb['result'][0].dateofbirth +'-'+ lastdigits);
         $('#person-name').text(cb['result'][0].firstname + ' ' + cb['result'][0].lastname);
         $('#person-height').text(cb['result'][0].height);
@@ -41,10 +42,10 @@ $(document).ready(function(){
 
         if (cb['efterlysningar'] != null) {
           $('#person-incident li').html(cb['efterlysningar'][0].crime + ' <a href="#!" class="inc-link" inc-numb="'+cb['efterlysningar'][0].incident+'">'+cb['efterlysningar'][0].incident+'</a>');
-          $('#person-incident b').removeClass('no').addClass('yes').text('JA');
+          $('#person-incident b').removeClass('no').addClass('yes').text('YES');
         } else {
           $('#person-incident li').html('');
-          $('#person-incident b').removeClass('yes').addClass('no').text('NEJ');
+          $('#person-incident b').removeClass('yes').addClass('no').text('NO');
         }
 
         if (cb['brottsregister'] != null) {
@@ -56,7 +57,7 @@ $(document).ready(function(){
         $('#' + win).hide();
         $('#start').show();
         win = 'start';
-        error('Hittade ingen med det personnumret..', 2000, '#7a2323');
+        error("Couldn't find a person with that date of birth", 2000, '#7a2323');
       }
     });
   }
@@ -72,6 +73,7 @@ $(document).ready(function(){
     plate = input.toUpperCase();
     $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'car', plate : plate}), function(cb) {
       if ( cb != 'error' && cb != 'rerun' ) {
+        cb = JSON.parse(cb);
         $('#car-owner').text(cb['result'][0].firstname + ' ' + cb['result'][0].lastname).attr('dob', cb['result'][0].dateofbirth + '-'+ cb['result'][0].lastdigits);
         $('#car-inspected').text(cb['carDetails'][0].inspected);
         Object.keys(cb['carIncidents']).forEach(function(k) {
@@ -81,7 +83,7 @@ $(document).ready(function(){
         $('#' + win).hide();
         $('#start').show();
         win = 'start';
-        error('Hittade ingen bil med det regnumret..', 2000, '#7a2323');
+        error("Couldn't find a car with that plate..", 2000, '#7a2323');
       } else if ( cb == 'rerun' ) {
         getCar(plate);
       }
@@ -128,14 +130,15 @@ $(document).ready(function(){
       } else if (type == 'incident') {
         $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'incident', number : input}), function(cb) {
           if ( cb != 'error' ) {
+            cb = JSON.parse(cb);
             $('#incident-a').hide();
             $('#incidenter input').val(cb[0].number);
-            $('#incident h4').text(cb[0].number+' | Uppladdad av '+cb[0].uploader+' ('+cb[0].date+')');
+            $('#incident h4').text(cb[0].number+' | Uploaded by '+cb[0].uploader+' ('+cb[0].date+')');
             $('#incident a').attr('inc-numb', cb[0].number);
             $('#incident p').text(cb[0].text);
             $('#incident').show();
           } else {
-            error('Hittade ingen incident med det numret..', 2000, '#7a2323');
+            error("Couldn't find an incident with that number", 2000, '#7a2323');
           }
         });
       }
@@ -157,11 +160,10 @@ $(document).ready(function(){
     if ($('#incident-text').val() != '') {
       $.post('http://jsfour-mdc/save', JSON.stringify({type : 'incident', text : $('#incident-text').val(), signedInUser : signedInUser}), function(cb) {
         $('#incident-text').val('');
-
         $('#' + win).hide();
         $('#start').show();
         win = 'start';
-        error('Skapade en incident! Ärende nummer: ' + cb, 6000, '#347a23');
+        error("Incident created! Incident number: " + cb, 6000, '#347a23');
       });
     }
   });
@@ -171,12 +173,11 @@ $(document).ready(function(){
     if ($('#new-car').val() != '') {
       $.post('http://jsfour-mdc/save', JSON.stringify({type : 'car', plate : plate, incident : $('#new-car').val(), signedInUser : signedInUser}), function(cb) {
         $('#new-car').val('');
-
         $('#' + win).hide();
         $('#start').show();
         win = 'start';
         getCar(plate);
-        error('La till en anmärkning!', 1000, '#347a23');
+        error("XX created!", 1000, '#347a23');
       });
     }
   });
@@ -206,7 +207,7 @@ $(document).ready(function(){
       $('#' + win).hide();
       $('#start').show();
       win = 'start';
-      error('Uppladdad!', 1000, '#347a23');
+      error("Uploaded!", 1000, '#347a23');
     }
   });
 
@@ -244,12 +245,12 @@ $(document).ready(function(){
       var personnummer = $(this).parent('li').find('.username').text().match(/\((.*)\)/)[1];
       $(this).parent('li').remove();
       $.post('http://jsfour-mdc/remove', JSON.stringify({type : 'efterlysning', dob : personnummer, signedin : signedInUser}), function(cb) {
-        error('Borttagen!', 500, '#347a23');
+        error('Removed!', 500, '#347a23');
       });
     } else if ( type == 'car' ) {
       $(this).remove();
       $.post('http://jsfour-mdc/remove', JSON.stringify({type : 'car', incident : $(this).attr('data'), plate : $(this).attr('plate'), signedin : signedInUser}), function(cb) {
-        error('Borttagen!', 500, '#347a23');
+        error('Removed!', 500, '#347a23');
       });
     } else if ( type == 'incident' ) {
       var incident = $(this).attr('inc-numb');
@@ -257,20 +258,20 @@ $(document).ready(function(){
       $('#incident-a').show();
       $(this).parent('li').remove();
       $.post('http://jsfour-mdc/remove', JSON.stringify({type : 'incident', incident : incident, signedin : signedInUser}), function(cb) {
-        error('Borttagen!', 500, '#347a23');
+        error('Removed!', 500, '#347a23');
       });
     } else if ( type == 'brottsregister' ) {
       $(this).remove();
       $.post('http://jsfour-mdc/remove', JSON.stringify({type : 'brottsregister', dob : $(this).attr('dob'), offense : $(this).attr('offense'), signedin : signedInUser}), function(cb) {
-        error('Borttagen!', 500, '#347a23');
+        error('Removed!', 500, '#347a23');
       });
     } else if ( type == 'efterlysning' ) {
       if ( $('#person-incident b').text() != 'NEJ') {
         var dob = $(this).attr('dob');
-        $('#person-incident b').removeClass('yes').addClass('no').text('NEJ');
+        $('#person-incident b').removeClass('yes').addClass('no').text('NO');
         $('#person-incident li').html('<a href="#!" class="inc-link"></a>');
         $.post('http://jsfour-mdc/remove', JSON.stringify({type : 'efterlysning', dob : dob, signedin : signedInUser}), function(cb) {
-          error('Borttagen!', 500, '#347a23');
+          error('Removed!', 500, '#347a23');
         });
       }
     }
@@ -285,13 +286,14 @@ $(document).ready(function(){
 
       $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'efterlysning'}), function(cb) {
         if ( cb != 'error' ) {
+          cb = JSON.parse(cb);
           Object.keys(cb).forEach(function(key) {
             $('#efterlys-content').prepend('<a href="#!" class="user" dob="'+cb[key].dob+'">' +
               '<li>' +
                 '<img src="assets/images/user.png" alt="IMG" draggable="false"/>' +
                 '<p class="username">'+cb[key].wanted+' ('+cb[key].dob+')</p>' +
-                '<a href="#!" class="remove" title="Ta bort" type="user"><i class="material-icons">remove_circle_outline</i></a>' +
-                '<p>'+cb[key].crime+' ('+cb[key].date+') se incident <a href="#!" class="inc-link" inc-numb="'+cb[key].incident+'">'+cb[key].incident+'</a>. Efterlyst av '+cb[key].uploader+'</p>' +
+                '<a href="#!" class="remove" title="Remove" type="user"><i class="material-icons">remove_circle_outline</i></a>' +
+                '<p>'+cb[key].crime+' ('+cb[key].date+') see incident <a href="#!" class="inc-link" inc-numb="'+cb[key].incident+'">'+cb[key].incident+'</a>. Uploaded by '+cb[key].uploader+'</p>' +
               '</li>' +
             '</a>');
           });
@@ -308,6 +310,7 @@ $(document).ready(function(){
     } else if ( page == 'admin' ) {
       $('#admin tbody').html('');
       $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'logs'}), function(cb) {
+        cb = JSON.parse(cb);
         Object.keys(cb).forEach(function(key) {
           $('#admin tbody').prepend('<tr>'+
             '<td>'+cb[key].type+'</td>'+
@@ -319,17 +322,18 @@ $(document).ready(function(){
     } else if ( page == 'dna' ) {
       $.post('http://jsfour-dna/upload', JSON.stringify({}), function(cb) {
         if ( cb == 'error') {
-          error('Du har inget DNA på dig..', 2000, '#7a2323');
+          error('You have no DNA..', 2000, '#7a2323');
         }
       });
     } else if ( page == 'incidenter' ) {
       $('#incidenter ul').html('');
       $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'incidenter'}), function(cb) {
+        cb = JSON.parse(cb);
         Object.keys(cb).forEach(function(key) {
           $('#incidenter ul').prepend('<li>'+
             '<a href="#!" inc-numb="'+cb[key].number+'" class="inc-link">'+cb[key].number+'</a>'+
-            '<a href="#!" class="remove no" title="Ta bort" type="incident" inc-numb="'+cb[key].number+'"><i class="material-icons">remove_circle_outline</i></a>'+
-            '<p>'+cb[key].text.substring(0,50)+'..<br> Uppladdad av '+cb[key].uploader+' ('+cb[key].date+')</p>'+
+            '<a href="#!" class="remove no" title="Remove" type="incident" inc-numb="'+cb[key].number+'"><i class="material-icons">remove_circle_outline</i></a>'+
+            '<p>'+cb[key].text.substring(0,50)+'..<br> Uploaded by '+cb[key].uploader+' ('+cb[key].date+')</p>'+
           '</li>');
         });
       });
@@ -365,7 +369,7 @@ $(document).ready(function(){
           setTimeout(function(){
             if ( password != key && signedInUser == null ) {
               wrong++;
-              error('Fel lösenord..', 1000, '#7a2323');
+              error('Wrong password..', 1000, '#7a2323');
             }
           }, 100);
         });
@@ -378,7 +382,7 @@ $(document).ready(function(){
             }
           });
         }
-        error('BLOCKERAD! För många felaktiga inloggningsförsök.. Du har blivit blockerad av systemet i 1 minut.', 60000, '#7a2323', '334px');
+        error("BLOCKED! You've been blocked for 1 minute", 60000, '#7a2323', '334px');
         setTimeout(function(){
           wrong = 0;
           warned++;
