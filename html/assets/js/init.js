@@ -24,21 +24,12 @@ $(document).ready(function(){
 
   // Get user info
   function getUser(type, input) {
-    if ( type == 'search') {
-      var year = '19' + input.substring(0,2);
-      var month = input.substring(2,4);
-      var day = input.substring(4,6);
-      var lastdigits = input.substring(7,12);
-      var oDOB = year +'-'+ month +'-'+ day
-    } else {
-      var oDOB       = input.substring(0,10);
-      var lastdigits = input.substring(11,15);
-    }
+    var lastdigits = input.substring(7,12);
     $('#' + win).hide();
     $('#start').hide();
     $('#person').show();
     win = 'person';
-    $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'person', dob : oDOB, lastdigits : lastdigits}), function(cb) {
+    $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'person', lastdigits : lastdigits}), function(cb) {
       if (cb != 'error') {
         $('#person-brottsregister').html('<h4>Brottsregister:</h4>');
         $('#person-personnummer').text(cb['result'][0].dateofbirth +'-'+ lastdigits);
@@ -46,7 +37,7 @@ $(document).ready(function(){
         $('#person-height').text(cb['result'][0].height);
         $('#person-sex').text(cb['result'][0].sex);
         $('#person-phone').text(cb['result'][0].phone_number);
-        $('#person-incident .remove').attr('dob', oDOB+'-'+ lastdigits);
+        $('#person-incident .remove').attr('dob', cb['result'][0].dateofbirth +'-'+ lastdigits);
 
         if (cb['efterlysningar'] != null) {
           $('#person-incident li').html(cb['efterlysningar'][0].crime + ' <a href="#!" class="inc-link" inc-numb="'+cb['efterlysningar'][0].incident+'">'+cb['efterlysningar'][0].incident+'</a>');
@@ -164,7 +155,7 @@ $(document).ready(function(){
   // Incident add
   $('#incident-add').click(function() {
     if ($('#incident-text').val() != '') {
-      $.post('http://jsfour-mdc/save', JSON.stringify({type : 'incident', text : $('#incident-text').val(), lastdigits : signedInUser}), function(cb) {
+      $.post('http://jsfour-mdc/save', JSON.stringify({type : 'incident', text : $('#incident-text').val(), signedInUser : signedInUser}), function(cb) {
         $('#incident-text').val('');
 
         $('#' + win).hide();
@@ -178,7 +169,7 @@ $(document).ready(function(){
   // Car details add
   $('#add-car-info').click(function() {
     if ($('#new-car').val() != '') {
-      $.post('http://jsfour-mdc/save', JSON.stringify({type : 'car', plate : plate, incident : $('#new-car').val(), lastdigits : signedInUser}), function(cb) {
+      $.post('http://jsfour-mdc/save', JSON.stringify({type : 'car', plate : plate, incident : $('#new-car').val(), signedInUser : signedInUser}), function(cb) {
         $('#new-car').val('');
 
         $('#' + win).hide();
@@ -194,23 +185,21 @@ $(document).ready(function(){
   $('#efterlys-submit').click(function() {
     if ($('#efterlys-firstname').val() != '' && $('#efterlys-lastname').val() != '' && $('#efterlys-personnummer').val() != '' && $('#efterlys-crime').val() != '' && $('#efterlys-incident').val() != '') {
       var val = $('#efterlys-personnummer').val();
-      var year = '19' + val.substring(0,2);
-      var month = val.substring(2,4);
-      var day = val.substring(4,6);
-      var _lastdigits = val.substring(7,12);
-      _dob = year +'-'+ month +'-'+ day +'-'+ _lastdigits
+      var lastdigits = val.substring(7,12);
+      var dob = 'found';
 
       if ( val.toLowerCase() == 'unknown' || val.toLowerCase() == 'okänd' || val.toLowerCase() == 'okänt' ) {
-        _dob = 'Okänt';
+        dob = 'Okänt';
       }
 
       $.post('http://jsfour-mdc/save', JSON.stringify({
         wanted : $('#efterlys-firstname').val() + ' ' + $('#efterlys-lastname').val(),
-        dob : _dob,
+        dob : dob,
         crime : $('#efterlys-crime').val(),
         incident : $('#efterlys-incident').val(),
         type : 'efterlysning',
-        lastdigits : signedInUser
+        lastdigits : lastdigits,
+        signedInUser : signedInUser
       }));
       $('#incident-text').val('');
 
@@ -352,7 +341,7 @@ $(document).ready(function(){
 
   // User click
   $("body").on("click", ".user", function() {
-    getUser('efterlys', $(this).attr('dob'));
+    getUser($(this).attr('type'), $(this).attr('dob'));
   });
 
   // Search form submit
