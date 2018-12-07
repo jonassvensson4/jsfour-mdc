@@ -5,7 +5,7 @@ math.randomseed(os.time())
 
 -- SAVE data to the database
 ESX.RegisterServerCallback('jsfour-mdc:save', function(source, cb, data)
-  MySQL.Async.fetchAll('SELECT firstname, lastname FROM users WHERE lastdigits = @lastdigits', {['@lastdigits'] = data.lastdigits},
+  MySQL.Async.fetchAll('SELECT firstname, lastname FROM users WHERE lastdigits = @lastdigits', {['@lastdigits'] = data.signedInUser},
   function (result)
     if result[1] ~= nil then
       local uploader  = result[1].firstname .. ' ' .. result[1].lastname
@@ -38,16 +38,23 @@ ESX.RegisterServerCallback('jsfour-mdc:save', function(source, cb, data)
           end
         end)
       elseif data.type == 'efterlysning' then
-        MySQL.Async.execute('INSERT INTO jsfour_efterlysningar (wanted, dob, crime, uploader, date, incident) VALUES (@wanted, @dob, @crime, @uploader, @date, @incident)',
-          {
-            ['@wanted']   = data.wanted,
-            ['@dob']      = data.dob,
-            ['@crime']    = data.crime,
-            ['@uploader'] = uploader,
-            ['@date']     = os.date("%Y-%m-%d"),
-            ['@incident'] = data.incident
-          }
-        )
+        MySQL.Async.fetchAll('SELECT dateofbirth, lastdigits FROM users WHERE lastdigits = @lastdigits', {['@lastdigits'] = data.lastdigits},
+        function (user)
+          if user[1] ~= nil then
+            MySQL.Async.execute('INSERT INTO jsfour_efterlysningar (wanted, dob, crime, uploader, date, incident) VALUES (@wanted, @dob, @crime, @uploader, @date, @incident)',
+              {
+                ['@wanted']   = data.wanted,
+                ['@dob']      = user[1].dateofbirth .. '-' .. user[1].lastdigits,
+                ['@crime']    = data.crime,
+                ['@uploader'] = uploader,
+                ['@date']     = os.date("%Y-%m-%d"),
+                ['@incident'] = data.incident
+              }
+            )
+          else
+            cb('error')
+          end
+        end)
       end
     else
       print('JSFOUR-MDC ERROR - WRONG LASTDIGITS IN PASSWORDS.JS COULDNT FIND THE USER WITH LASTDIGITS: ' .. data.lastdigits)
@@ -157,14 +164,15 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     function (result)
       if result[1] ~= nil then
         result = result
-        MySQL.Async.fetchAll('SELECT * FROM jsfour_criminalrecord WHERE dob = @dob AND identifier = @identifier', {['@dob'] = data.dob, ['@identifier'] = result[1].identifier},
+        dateofbirth = result[1].dateofbirth
+        MySQL.Async.fetchAll('SELECT * FROM jsfour_criminalrecord WHERE dob = @dob AND identifier = @identifier', {['@dob'] = dateofbirth, ['@identifier'] = result[1].identifier},
         function (brottsregister)
           if brottsregister[1] ~= nil then
             brottsregister = brottsregister
           else
             brottsregister = nil
           end
-          MySQL.Async.fetchAll('SELECT incident, crime FROM jsfour_efterlysningar WHERE dob = @dob', {['@dob'] = data.dob .. '-' .. data.lastdigits},
+          MySQL.Async.fetchAll('SELECT incident, crime FROM jsfour_efterlysningar WHERE dob = @dob', {['@dob'] = dateofbirth .. '-' .. data.lastdigits},
           function (efterlysningar)
             if efterlysningar[1] ~= nil then
               efterlysningar = efterlysningar
