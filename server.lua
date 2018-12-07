@@ -77,7 +77,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     MySQL.Async.fetchAll('SELECT * FROM jsfour_logs', {},
     function (result)
       if result[1] ~= nil then
-        cb(result)
+        cb(json.encode(result))
       else
         cb('error')
       end
@@ -86,7 +86,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     MySQL.Async.fetchAll('SELECT * FROM jsfour_incidents WHERE number = @number', {['@number'] = data.number},
     function (result)
       if result[1] ~= nil then
-        cb(result)
+        cb(json.encode(result))
       else
         cb('error')
       end
@@ -95,7 +95,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     MySQL.Async.fetchAll('SELECT * FROM jsfour_incidents', {},
     function (result)
       if result[1] ~= nil then
-        cb(result)
+        cb(json.encode(result))
       else
         cb('error')
       end
@@ -131,7 +131,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
                       carIncidents = carIncidents
                     }
 
-                    cb(array)
+                    cb(json.encode(array))
                   else
                     MySQL.Async.execute('INSERT INTO jsfour_cardetails (plate, owner, inspected, identifier) VALUES (@plate, @owner, @inspected, @identifier)',
                       {
@@ -159,20 +159,18 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     local result
     local brottsregister
     local efterlysningar
-
     MySQL.Async.fetchAll('SELECT identifier, firstname, lastname, dateofbirth, height, sex, phone_number FROM users WHERE lastdigits = @lastdigits', {['@lastdigits'] = data.lastdigits},
     function (result)
       if result[1] ~= nil then
         result = result
-        dateofbirth = result[1].dateofbirth
-        MySQL.Async.fetchAll('SELECT * FROM jsfour_criminalrecord WHERE dob = @dob AND identifier = @identifier', {['@dob'] = dateofbirth, ['@identifier'] = result[1].identifier},
+        MySQL.Async.fetchAll('SELECT * FROM jsfour_criminalrecord WHERE dob = @dob AND identifier = @identifier', {['@dob'] = result[1].dateofbirth, ['@identifier'] = result[1].identifier},
         function (brottsregister)
           if brottsregister[1] ~= nil then
             brottsregister = brottsregister
           else
             brottsregister = nil
           end
-          MySQL.Async.fetchAll('SELECT incident, crime FROM jsfour_efterlysningar WHERE dob = @dob', {['@dob'] = dateofbirth .. '-' .. data.lastdigits},
+          MySQL.Async.fetchAll('SELECT incident, crime FROM jsfour_efterlysningar WHERE dob = @dob', {['@dob'] = result[1].dateofbirth .. '-' .. data.lastdigits},
           function (efterlysningar)
             if efterlysningar[1] ~= nil then
               efterlysningar = efterlysningar
@@ -185,7 +183,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
               brottsregister = brottsregister,
               efterlysningar = efterlysningar
             }
-            cb(array)
+            cb(json.encode(array))
           end)
         end)
       else
