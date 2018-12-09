@@ -24,14 +24,13 @@ $(document).ready(function(){
 
   // Get user info
   function getUser(type, input) {
-    var lastdigits = input.substring(7,12);
+    var lastdigits = input.substr(input.length - 4);
     $('#' + win).hide();
     $('#start').hide();
     $('#person').show();
     win = 'person';
     $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'person', lastdigits : lastdigits}), function(cb) {
       if (cb != 'error') {
-        cb = JSON.parse(cb);
         $('#person-brottsregister').html('<h4>Criminal record:</h4>');
         $('#person-personnummer').text(cb['result'][0].dateofbirth +'-'+ lastdigits);
         $('#person-name').text(cb['result'][0].firstname + ' ' + cb['result'][0].lastname);
@@ -73,7 +72,6 @@ $(document).ready(function(){
     plate = input.toUpperCase();
     $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'car', plate : plate}), function(cb) {
       if ( cb != 'error' && cb != 'rerun' ) {
-        cb = JSON.parse(cb);
         $('#car-owner').text(cb['result'][0].firstname + ' ' + cb['result'][0].lastname).attr('dob', cb['result'][0].dateofbirth + '-'+ cb['result'][0].lastdigits);
         $('#car-inspected').text(cb['carDetails'][0].inspected);
         Object.keys(cb['carIncidents']).forEach(function(k) {
@@ -130,7 +128,6 @@ $(document).ready(function(){
       } else if (type == 'incident') {
         $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'incident', number : input}), function(cb) {
           if ( cb != 'error' ) {
-            cb = JSON.parse(cb);
             $('#incident-a').hide();
             $('#incidenter input').val(cb[0].number);
             $('#incident h4').text(cb[0].number+' | Uploaded by '+cb[0].uploader+' ('+cb[0].date+')');
@@ -286,7 +283,6 @@ $(document).ready(function(){
 
       $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'efterlysning'}), function(cb) {
         if ( cb != 'error' ) {
-          cb = JSON.parse(cb);
           Object.keys(cb).forEach(function(key) {
             $('#efterlys-content').prepend('<a href="#!" class="user" dob="'+cb[key].dob+'">' +
               '<li>' +
@@ -310,7 +306,6 @@ $(document).ready(function(){
     } else if ( page == 'admin' ) {
       $('#admin tbody').html('');
       $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'logs'}), function(cb) {
-        cb = JSON.parse(cb);
         Object.keys(cb).forEach(function(key) {
           $('#admin tbody').prepend('<tr>'+
             '<td>'+cb[key].type+'</td>'+
@@ -328,7 +323,6 @@ $(document).ready(function(){
     } else if ( page == 'incidenter' ) {
       $('#incidenter ul').html('');
       $.post('http://jsfour-mdc/fetch', JSON.stringify({type : 'incidenter'}), function(cb) {
-        cb = JSON.parse(cb);
         Object.keys(cb).forEach(function(key) {
           $('#incidenter ul').prepend('<li>'+
             '<a href="#!" inc-numb="'+cb[key].number+'" class="inc-link">'+cb[key].number+'</a>'+
