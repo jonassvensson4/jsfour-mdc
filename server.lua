@@ -77,7 +77,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     MySQL.Async.fetchAll('SELECT * FROM jsfour_logs', {},
     function (result)
       if result[1] ~= nil then
-        cb(json.encode(result))
+        cb(result)
       else
         cb('error')
       end
@@ -86,7 +86,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     MySQL.Async.fetchAll('SELECT * FROM jsfour_incidents WHERE number = @number', {['@number'] = data.number},
     function (result)
       if result[1] ~= nil then
-        cb(json.encode(result))
+        cb(result)
       else
         cb('error')
       end
@@ -95,7 +95,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
     MySQL.Async.fetchAll('SELECT * FROM jsfour_incidents', {},
     function (result)
       if result[1] ~= nil then
-        cb(json.encode(result))
+        cb(result)
       else
         cb('error')
       end
@@ -131,7 +131,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
                       carIncidents = carIncidents
                     }
 
-                    cb(json.encode(array))
+                    cb(array)
                   else
                     MySQL.Async.execute('INSERT INTO jsfour_cardetails (plate, owner, inspected, identifier) VALUES (@plate, @owner, @inspected, @identifier)',
                       {
@@ -183,7 +183,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
               brottsregister = brottsregister,
               efterlysningar = efterlysningar
             }
-            cb(json.encode(array))
+            cb(array)
           end)
         end)
       else
