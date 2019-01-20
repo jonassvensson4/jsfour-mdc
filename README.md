@@ -30,7 +30,7 @@ Please don't sell or reupload this resource
   - You need to have a script, or add the lastdigits manually to every player. Or you could use my jsfour-register
 * If you doesn't use my <a href="https://github.com/jonassvensson4/jsfour-criminalrecord">jsfour-criminalrecord<a/> you'll probably get an error so I recommend you to use it. Or make some changes in the server.lua
 * If you've added custom car-models for the police cars you might have to add them to the config.lua
-* Add all the officers lastdigits with a password to html/assets/js/passwords.js. There's more inforamtion in that file. If someone becomes a officer while the server is running the script will need a restart OR they could just use someone elses password meanwhile.
+* Add all the officers lastdigits with a password to html/assets/js/passwords.js. There's more information in that file. If someone becomes a officer while the server is running the script will need a restart OR they could just use someone elses password meanwhile.
 * Make sure you're using the latest version of esx_vehicleshop
   
 ### GUIDE
