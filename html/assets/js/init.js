@@ -183,7 +183,7 @@ $(document).ready(function(){
   $('#efterlys-submit').click(function() {
     if ($('#efterlys-firstname').val() != '' && $('#efterlys-lastname').val() != '' && $('#efterlys-personnummer').val() != '' && $('#efterlys-crime').val() != '' && $('#efterlys-incident').val() != '') {
       var val = $('#efterlys-personnummer').val();
-      var lastdigits = val.substring(7,12);
+      var lastdigits = val.substr(val.length - 4);
       var dob = 'found';
 
       if ( val.toLowerCase() == 'unknown' || val.toLowerCase() == 'okänd' || val.toLowerCase() == 'okänt' ) {
