@@ -114,6 +114,7 @@ button {
   float: left;
   position: relative;
   color: #f5e068;
+  width: 100px
 }
 .block .material-icons {
   float: right;
