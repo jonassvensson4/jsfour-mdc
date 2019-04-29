@@ -318,6 +318,8 @@ $(document).ready(function(){
       $.post('http://jsfour-dna/upload', JSON.stringify({}), function(cb) {
         if ( cb == 'error') {
           error('You have no DNA..', 2000, '#7a2323');
+        } else {
+          error('DNA uploaded!', 2000, '#347a23');
         }
       });
     } else if ( page == 'incidenter' ) {
