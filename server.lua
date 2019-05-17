@@ -137,7 +137,7 @@ ESX.RegisterServerCallback('jsfour-mdc:fetch', function(source, cb, data)
                       {
                         ['@plate']      = data.plate,
                         ['@owner']      = result[1].firstname .. ' ' .. result[1].lastname,
-                        ['@inspected']  = 'Ja',
+                        ['@inspected']  = 'Yes',
                         ['@identifier'] = identifier
                       }
                     )
