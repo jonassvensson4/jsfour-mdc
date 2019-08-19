@@ -57,7 +57,7 @@ ESX.RegisterServerCallback('jsfour-mdc:save', function(source, cb, data)
         end)
       end
     else
-      print('JSFOUR-MDC ERROR - WRONG LASTDIGITS IN PASSWORDS.JS COULDNT FIND THE USER WITH LASTDIGITS: ' .. data.lastdigits)
+      print('JSFOUR-MDC ERROR - WRONG LASTDIGITS IN PASSWORDS.JS COULDNT FIND THE USER WITH LASTDIGITS: ' .. data.signedInUser)
     end
   end)
 end)
