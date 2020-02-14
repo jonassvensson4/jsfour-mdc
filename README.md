@@ -1,3 +1,4 @@
+# This resource have been archived. I no longer give any support regarding this resource. Find out why [here](https://github.com/jonassvensson4/jsfour-mdc/issues/27).
 # jsfour-mdc
 
 Mobile Data Computer, a computer that can be access from every police car:
